@@ -1,11 +1,16 @@
+use clap::Parser;
 use std::env;
 use std::process::Command;
-use clap::{Parser};
 
 #[derive(Parser, Debug)]
 #[clap(name = "studio")]
 struct Args {
-    #[clap(help = "Open Android Studio in this directory", short, long, default_value = ".")]
+    #[clap(
+        help = "Open Android Studio in this directory",
+        short,
+        long,
+        default_value = "."
+    )]
     dir: String,
 }
 
