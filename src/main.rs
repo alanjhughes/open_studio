@@ -17,7 +17,7 @@ fn main() {
 
     let current = env::current_dir().expect("Failed to open directory");
 
-    if args.dir == "." {
+    if args.dir.eq(".") {
         command.arg(current);
     } else {
         command.arg(args.dir);
