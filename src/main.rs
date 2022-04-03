@@ -20,6 +20,7 @@ fn main() -> Result<()> {
     let args: Args = Args::parse();
 
     let mut command = Command::new("open");
+
     command.arg("-a").arg("Android Studio.app").arg("--args");
 
     let path = args
@@ -28,7 +29,6 @@ fn main() -> Result<()> {
         .with_context(|| format!("Error: could not find directory `{}`", args.dir.display()))?;
 
     command.arg(path);
-
     command.spawn()?;
     Ok(())
 }
