@@ -18,12 +18,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut command = Command::new("open");
     command.arg("-a").arg("Android Studio.app").arg("--args");
 
-    let path = match args.dir.canonicalize() {
-        Ok(value) => value,
-        Err(error) => {
-            return Err(error.into());
-        }
-    };
+    let path = args.dir.canonicalize()?;
 
     command.arg(path);
 
