@@ -1,9 +1,9 @@
 extern crate core;
 
-use anyhow::{Context, Result};
 use std::path::PathBuf;
 use std::process::Command;
 
+use anyhow::{Context, Result};
 use clap::Parser;
 
 #[derive(Debug)]
@@ -29,6 +29,6 @@ fn main() -> Result<()> {
 
     command.arg(path);
 
-    command.spawn().expect("Failed to run program");
+    command.spawn()?;
     Ok(())
 }
