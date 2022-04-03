@@ -1,32 +1,32 @@
-use clap::Parser;
-use std::env;
+extern crate core;
+
+use std::path::PathBuf;
 use std::process::Command;
+
+use clap::Parser;
 
 #[derive(Parser, Debug)]
 #[clap(name = "studio")]
 struct Args {
-    #[clap(
-        help = "Open Android Studio in this directory",
-        short,
-        long,
-        default_value = "."
-    )]
-    dir: String,
+    #[clap(short = 'd', parse(from_os_str), value_hint = clap::ValueHint::DirPath, default_value = ".")]
+    dir: PathBuf,
 }
 
-fn main() {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args: Args = Args::parse();
 
     let mut command = Command::new("open");
-    command.arg("-a").arg("Android Studio.app");
+    command.arg("-a").arg("Android Studio.app").arg("--args");
 
-    let current = env::current_dir().expect("Failed to open directory");
+    let path = match args.dir.canonicalize() {
+        Ok(value) => value,
+        Err(error) => {
+            return Err(error.into());
+        }
+    };
 
-    if args.dir.eq(".") {
-        command.arg(current);
-    } else {
-        command.arg(args.dir);
-    }
+    command.arg(path);
 
     command.spawn().expect("Failed to run program");
+    Ok(())
 }
