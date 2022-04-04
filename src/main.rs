@@ -21,7 +21,10 @@ fn main() -> Result<()> {
 
     let mut command = Command::new("open");
 
-    command.arg("-a").arg("Android Studio.app").arg("--args");
+    command
+        .arg("-a")
+        .arg("Android Studio.app")
+        .arg("--args");
 
     let path = args
         .dir
